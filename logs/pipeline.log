@@ -1,0 +1,29 @@
+2026-05-28 01:23:25,334 - INFO - Starting Memecoin ETL Pipeline
+2026-05-28 01:23:26,171 - INFO - CSV Generated: data/raw/memecoin_data_2026-05-28.csv
+2026-05-28 01:23:26,213 - INFO - Request URL: 'https://memecoinstorage0603.blob.core.windows.net/bronze/coingecko/year%3D2026/month%3D05/day%3D28/memecoin_data_2026-05-28.csv'
+Request method: 'PUT'
+Request headers:
+    'Content-Length': '2618'
+    'x-ms-blob-type': 'REDACTED'
+    'x-ms-version': 'REDACTED'
+    'Content-Type': 'application/octet-stream'
+    'Accept': 'application/xml'
+    'User-Agent': 'azsdk-python-storage-blob/12.29.0 Python/3.12.6 (Windows-11-10.0.26200-SP0)'
+    'x-ms-date': 'REDACTED'
+    'x-ms-client-request-id': 'b9b454cb-5a05-11f1-be7a-d300b95d39cc'
+    'Authorization': 'REDACTED'
+A body is sent with the request
+2026-05-28 01:23:27,159 - INFO - Response status: 201
+Response headers:
+    'Content-Length': '0'
+    'Content-MD5': 'REDACTED'
+    'Last-Modified': 'Wed, 27 May 2026 19:53:27 GMT'
+    'ETag': '"0x8DEBC299E7F947C"'
+    'x-ms-request-id': '80fd27d5-b01e-0012-1312-ee1187000000'
+    'x-ms-client-request-id': 'b9b454cb-5a05-11f1-be7a-d300b95d39cc'
+    'x-ms-version': 'REDACTED'
+    'x-ms-content-crc64': 'REDACTED'
+    'x-ms-request-server-encrypted': 'REDACTED'
+    'Date': 'Wed, 27 May 2026 19:53:26 GMT'
+2026-05-28 01:23:27,159 - INFO - File Uploaded To Azure Blob
+2026-05-28 01:23:27,159 - INFO - Pipeline Executed Successfully

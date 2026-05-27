@@ -1,83 +1,61 @@
 import requests
 import pandas as pd
 from datetime import datetime
+import os
 
-# -----------------------------------
-# CONFIGURATION
-# -----------------------------------
+def fetch_memecoin_data():
 
-URL = "https://api.coingecko.com/api/v3/coins/markets"
+    url = "https://api.coingecko.com/api/v3/coins/markets"
 
-PARAMS = {
-    "vs_currency": "usd",
-    "category": "meme-token",
-    "order": "market_cap_desc",
-    "per_page": 20,
-    "page": 1,
-    "sparkline": False,
-    "price_change_percentage": "24h"
-}
-
-# -----------------------------------
-# API REQUEST
-# -----------------------------------
-
-response = requests.get(URL, params=PARAMS)
-
-# Check API status
-if response.status_code != 200:
-    print("API Request Failed")
-    print(response.status_code)
-    exit()
-
-data = response.json()
-
-# -----------------------------------
-# EXTRACT REQUIRED FIELDS
-# -----------------------------------
-
-memecoin_list = []
-
-for coin in data:
-
-    coin_data = {
-        "coin_id": coin.get("id"),
-        "symbol": coin.get("symbol"),
-        "coin_name": coin.get("name"),
-        "current_price": coin.get("current_price"),
-        "market_cap": coin.get("market_cap"),
-        "market_cap_rank": coin.get("market_cap_rank"),
-        "total_volume": coin.get("total_volume"),
-        "high_24h": coin.get("high_24h"),
-        "low_24h": coin.get("low_24h"),
-        "price_change_24h": coin.get("price_change_24h"),
-        "price_change_percentage_24h":
-            coin.get("price_change_percentage_24h"),
-        "circulating_supply": coin.get("circulating_supply"),
-        "last_updated": coin.get("last_updated"),
-        "ingestion_timestamp": datetime.now()
+    params = {
+        "vs_currency": "usd",
+        "category": "meme-token",
+        "order": "market_cap_desc",
+        "per_page": 20,
+        "page": 1,
+        "sparkline": False,
+        "price_change_percentage": "24h"
     }
 
-    memecoin_list.append(coin_data)
+    response = requests.get(url, params=params)
 
-# -----------------------------------
-# CREATE DATAFRAME
-# -----------------------------------
+    if response.status_code != 200:
+        raise Exception(
+            f"API Request Failed: {response.status_code}"
+        )
 
-df = pd.DataFrame(memecoin_list)
+    data = response.json()
 
-# -----------------------------------
-# SAVE CSV
-# -----------------------------------
+    memecoin_list = []
 
-file_name = f"data/raw/memecoin_data_{datetime.now().date()}.csv"
+    for coin in data:
 
-df.to_csv(file_name, index=False)
+        coin_data = {
+            "coin_id": coin.get("id"),
+            "symbol": coin.get("symbol"),
+            "coin_name": coin.get("name"),
+            "current_price": coin.get("current_price"),
+            "market_cap": coin.get("market_cap"),
+            "market_cap_rank": coin.get("market_cap_rank"),
+            "total_volume": coin.get("total_volume"),
+            "price_change_percentage_24h":
+                coin.get("price_change_percentage_24h"),
+            "last_updated": coin.get("last_updated"),
+            "ingestion_timestamp": datetime.now()
+        }
 
-# -----------------------------------
-# OUTPUT
-# -----------------------------------
+        memecoin_list.append(coin_data)
 
-print("Data Ingestion Successful")
-print(df.head())
-print(f"\nCSV Saved: {file_name}")
+    df = pd.DataFrame(memecoin_list)
+
+    os.makedirs("data/raw", exist_ok=True)
+
+    file_name = (
+        f"data/raw/memecoin_data_{datetime.now().date()}.csv"
+    )
+
+    df.to_csv(file_name, index=False)
+
+    print("CSV Generated Successfully")
+
+    return file_name
