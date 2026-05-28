@@ -11,7 +11,7 @@ from ingestion.utils import setup_logger
 
 logger = setup_logger()
 
-
+print("Pipeline started...")
 def run_pipeline():
 
     try:
@@ -29,11 +29,12 @@ def run_pipeline():
         logger.info(
             f"CSV Generated: {file_path}"
         )
+        print("Data ingestion completed")
 
         # -----------------------------------
         # UPLOAD TO AZURE BLOB
         # -----------------------------------
-
+        print("Starting upload...")
         upload_file_to_blob(file_path)
 
         logger.info(
@@ -44,6 +45,7 @@ def run_pipeline():
             "Pipeline Executed Successfully"
         )
 
+        print("Upload completed")
         print("Pipeline Executed Successfully")
 
     except Exception as e:
