@@ -1,6 +1,8 @@
 from azure.storage.blob import BlobServiceClient
 from datetime import datetime
 import os
+from datetime import datetime
+import pytz
 
 CONNECTION_STRING = os.getenv(
     "AZURE_CONNECTION_STRING"
@@ -24,7 +26,8 @@ def upload_file_to_blob(local_file_path):
     # CREATE PARTITION PATH
     # ----------------------------------------
 
-    today = datetime.now()
+    india_timezone = pytz.timezone("Asia/Kolkata")
+    today = datetime.now(india_timezone)
 
     blob_path = (
         f"coingecko/"
