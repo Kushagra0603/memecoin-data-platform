@@ -1,8 +1,12 @@
 from azure.storage.blob import BlobServiceClient
 from datetime import datetime
+import os
 
-from config import CONNECTION_STRING, CONTAINER_NAME
+CONNECTION_STRING = os.getenv(
+    "AZURE_CONNECTION_STRING"
+)
 
+CONTAINER_NAME = "bronze"
 
 def upload_file_to_blob(local_file_path):
 
