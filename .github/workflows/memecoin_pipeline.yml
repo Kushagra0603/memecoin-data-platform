@@ -1,0 +1,37 @@
+name: Memecoin ETL Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+
+  run-etl-pipeline:
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+
+        with:
+          python-version: "3.12"
+
+      - name: Install Dependencies
+
+        run: |
+          pip install -r requirements.txt
+
+      - name: Run ETL Pipeline
+
+        env:
+          AZURE_CONNECTION_STRING:
+            ${{ secrets.AZURE_CONNECTION_STRING }}
+
+        run: |
+          python -m ingestion.main_pipeline
